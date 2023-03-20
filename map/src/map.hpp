@@ -24,6 +24,38 @@ public:
 	 * You can use sjtu::map as value_type by typedef.
 	 */
 	typedef pair<const Key, T> value_type;
+	class node {
+		bool col;
+		int siz;
+		value_type* val;
+		node* c[2], * fa;
+		node(Key _val1, T _val2, node* tmp = nullptr) {
+			col = 1; siz = 1;
+			val = new value_type(_val1, _val2);
+			fa = c[0] = c[1] = tmp;
+		}
+		node(const node& other) {
+			col = other.col; siz = other.siz;
+			val = new value_type(*(other.val));
+		}
+		~node() {
+			if (val) delete val;
+			c[0] = c[1] = fa = nullptr;
+			col = 0;
+		}
+	};
+	
+	class RedBlackTree {
+	public:
+		node* root;
+		node* nullNode;
+		bool flag;
+		RedBlackTree() {
+			root = nullNode = nullptr;
+			flag = 1;
+		}
+	};
+
 	/**
 	 * see BidirectionalIterator at CppReference for help.
 	 *
@@ -101,7 +133,8 @@ public:
 	/**
 	 * TODO two constructors
 	 */
-	map() {}
+	map() {
+	}
 	map(const map &other) {}
 	/**
 	 * TODO assignment operator
