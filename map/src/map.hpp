@@ -13,6 +13,25 @@
 
 namespace sjtu {
 
+  template<typename T>
+  struct my_type_traits {
+    using iterator_assignable = typename T::iterator_assignable;
+  };
+
+  struct my_true_type {
+    static const bool key = true;
+  };
+
+  struct my_false_type {
+    static const bool key = false;
+  };
+
+  template<typename T>
+  void is_assignable(const T& tar) {
+    if (T::iterator_assignable::key == my_true_type::key) std::cout << "Assignable" << std::endl;
+    else std::cout << "Not Assignable" << std::endl;
+  }
+
   template<
     class Key,
     class T,
@@ -281,6 +300,7 @@ namespace sjtu {
        *   just add whatever you want.
        */
     public:
+      using iterator_assignable = my_true_type;
       iterator() {
         beg = nullptr;
         pos = nullptr;
@@ -367,6 +387,7 @@ namespace sjtu {
       const map<Key, T, Compare>* beg;
       // data members.
     public:
+      using iterator_assignable = my_false_type;
       const_iterator() {
         beg = nullptr;
         pos = nullptr;
